@@ -1,4 +1,9 @@
-﻿Version 2.0.0.2 [10-05-2017]
+﻿Version 2.x.x.x [01-05-2023]
+  Changelog in progress 
+  * Migrate to VS2022
+  * Update .NET dependency to 4.8 from 4.0
+  * Migrate Update URLs to my github.
+Version 2.0.0.2 [10-05-2017]
 
   * Migration to GitHub.
   * Added option to specify COMPUTERNAME as a parameter and automatically connect.

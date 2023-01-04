@@ -77,6 +77,30 @@ namespace WmiExplorer.Forms
                             Checked = false
                         };
                     }
+                    // if type is array, we will add array box
+                    else if (inParam.IsArray) {
+                        if (inParam.Type == CimType.Object || inParam.Type == CimType.Reference)
+                        {
+                            paramControls[i] = new TextBox
+                            {
+                                Text = "Object parameter not supported",
+                                ReadOnly = true,
+                                Tag = inParam.Name
+                            };
+                        }
+                        else
+                        {
+                            paramControls[i] = new TextBox
+                            {
+                                Text = String.Empty,
+                                Multiline = true,
+                                ScrollBars = ScrollBars.Vertical,
+                                AcceptsReturn = true,
+                                AutoSize = true,
+                                Tag = inParam.Name
+                            };
+                        }
+                    }
                     else
                     {
                         if (inParam.Type == CimType.Object || inParam.Type == CimType.Reference)
@@ -224,9 +248,26 @@ namespace WmiExplorer.Forms
                 {
                     if (control is TextBox)
                     {
-                        inParams[control.Tag.ToString()] = control.Text;
-                    }
+                        var type = Type.GetType(control.GetType().AssemblyQualifiedName, false, true);
+                        var paramtype = inParams.Properties[control.Tag.ToString()];
+                        var multilinestate = (bool)type.GetProperty("Multiline").GetValue(control, null);
+                        //detect if the param is an array.
+                        if (paramtype.Type == CimType.String)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Hooray2!");
 
+                        }
+                        if (multilinestate == true)
+                        {
+                            var StrArray = control.Text.Split('\n');
+                            inParams[control.Tag.ToString()] = StrArray;
+                            System.Diagnostics.Debug.WriteLine("Hooray!");
+                        }
+                        else {
+                            inParams[control.Tag.ToString()] = control.Text;
+
+                        }
+                    }
                     if (control is CheckBox)
                     {
                         inParams[control.Tag.ToString()] = ((CheckBox) control).Checked.ToString();

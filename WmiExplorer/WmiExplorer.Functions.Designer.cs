@@ -1763,6 +1763,21 @@ namespace WmiExplorer
                 textBoxComputerName.Text = args[1].ToString();
                 buttonComputerConnect.PerformClick();
             }
+            if (args.Length == 3)
+            {
+                var compname = args[1].ToString();
+                var username = args[2].ToString();
+                commandLineComputerConnect(compname, username);
+            }
+            if (args.Length == 4)
+            {
+                var compname = args[1].ToString();
+                var username = args[2].ToString();
+                var password = args[3].ToString().StringToSecureString();
+                System.Console.WriteLine("PLEASE AVOID USING PLAINTEXT PASSWORDS FROM THE COMMAND LINE!");
+                commandLineComputerConnect(compname, username, password);
+
+            }
         }
 
         private void PopulateClassProperties(WmiClass wmiClass)

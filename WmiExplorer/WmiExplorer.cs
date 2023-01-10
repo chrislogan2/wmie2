@@ -75,6 +75,40 @@ namespace WmiExplorer
             Connect(rootNode);
         }
 
+        public void commandLineComputerConnect(String cmdLineComputerName, String cmdLineUserName, System.Security.SecureString cmdLinePassword)
+        {
+            // Set computer name display text to NetBIOS name if using . or localhost or blank name
+            if (cmdLineComputerName == "." || cmdLineComputerName == "localhost" || cmdLineComputerName == String.Empty)
+                cmdLineComputerName = SystemInformation.ComputerName;
+            ConnectionOptions cmdLineOptions = new ConnectionOptions
+            {
+                EnablePrivileges = true,
+                Impersonation = ImpersonationLevel.Impersonate,
+                Authentication = AuthenticationLevel.Default,
+                Username = cmdLineUserName,
+                SecurePassword = cmdLinePassword
+            };
+            WmiNode rootNode = new WmiNode
+            {
+                IsRootNode = true,
+                UserSpecifiedPath= cmdLineComputerName.ToUpperInvariant()
+            };
+            rootNode.SetConnection(cmdLineOptions);
+            Connect(rootNode);
+        }
+        public void commandLineComputerConnect(String cmdLineComputerName, String cmdLineUserName)
+        {
+            // Set computer name display text to NetBIOS name if using . or localhost or blank name
+            if (cmdLineComputerName == "." || cmdLineComputerName == "localhost" || cmdLineComputerName == String.Empty)
+                cmdLineComputerName = SystemInformation.ComputerName;
+
+           
+                using (Form_ConnectAs connectAsForm = new Form_ConnectAs(cmdLineComputerName,cmdLineUserName))
+                {
+                    connectAsForm.ShowDialog(this);
+                }
+            
+        }
         private void buttonHideNamespaces_Click(object sender, EventArgs e)
         {
             if (buttonHideNamespaces.Text == "-")

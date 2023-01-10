@@ -11,6 +11,13 @@ namespace WmiExplorer.Forms
         public string Path;
         public bool Cancelled;
 
+
+        public Form_ConnectAs()
+        {
+            InitializeComponent();
+            textBoxPath.Select();
+
+        }
         public Form_ConnectAs(string path = "")
         {
             InitializeComponent();
@@ -20,6 +27,24 @@ namespace WmiExplorer.Forms
                 textBoxPath.Text = path;
                 textBoxPath.ReadOnly = true;
                 textBoxUsername.Select();
+            }
+
+        }
+        public Form_ConnectAs(string path = "",string user = "")
+        {
+            InitializeComponent();
+
+            if (!String.IsNullOrEmpty(path))
+            {
+                textBoxPath.Text = path;
+                textBoxPath.ReadOnly = true;
+                textBoxUsername.Select();
+            }
+            if(!String.IsNullOrEmpty(user))
+            {
+                textBoxUsername.Text = user;
+                textBoxUsername.ReadOnly = true;
+                textBoxPassword.Select();
             }
 
         }

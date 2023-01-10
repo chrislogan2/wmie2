@@ -7,13 +7,21 @@ As someone who works with Configuration Manager (SCCM), I spend a lot of time in
 
 # Requirements
 
-* Microsoft .NET Framework 4.0 Full or .NET Framework 4.5.1
+* Microsoft .NET Framework 4.8
 * Minimum display resolution: 1024x768
 * Administrator rights to view some WMI objects
 * (Optional) Internet access for automatic update check
 
+# New Features as of 2.x.x.x
+* Invoke WMIExplorer from command line:
+`WmiExplorer.exe HOSTNAME`
+`WmiExplorer.exe HOSTNAME USERNAME`
+`WmiExplorer.exe HOSTNAME USERNAME PASSWORD` 
+I don't really recommend you use plaintext passwords on the command line.
+* Generic support for method parameters that are arrays -- needs more testing as it is a somewhat primitive implementation.
+* Script Generation updated to show CIM cmdlets and include legact WMI equivalents.
+* More to come.
 # Features
-
 * Browse and view WMI objects in a single pane of view.
 * Connect as alternate credentials to remote computers.
 * Asynchronous and Synchronous mode for enumeration.

@@ -13,7 +13,7 @@ As someone who works with Configuration Manager (SCCM), I spend a lot of time in
 * (Optional) Internet access for automatic update check
 
 # New Features as of 2.0.1.x
-* Invoke WMIExplorer from command line:
+* Invoke WMIExplorer from command line:  
 `WmiExplorer.exe HOSTNAME`  
 `WmiExplorer.exe HOSTNAME USERNAME`  
 `WmiExplorer.exe HOSTNAME USERNAME PASSWORD`   

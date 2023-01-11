@@ -14,9 +14,9 @@ As someone who works with Configuration Manager (SCCM), I spend a lot of time in
 
 # New Features as of 2.0.1.x
 * Invoke WMIExplorer from command line:
-`WmiExplorer.exe HOSTNAME`
-`WmiExplorer.exe HOSTNAME USERNAME`
-`WmiExplorer.exe HOSTNAME USERNAME PASSWORD` 
+`WmiExplorer.exe HOSTNAME`  
+`WmiExplorer.exe HOSTNAME USERNAME`  
+`WmiExplorer.exe HOSTNAME USERNAME PASSWORD`   
 I don't really recommend you use plaintext passwords on the command line.
 * Generic support for method parameters that are arrays -- needs more testing as it is a somewhat primitive implementation.
 * Script Generation updated to show CIM cmdlets and include legact WMI equivalents.

@@ -1957,7 +1957,53 @@ namespace WmiExplorer
                 SetStatusBar2(message, MessageCategory.Error);
             }
         }
+        // Getting Instance properties for Exporting.
+        private ManagementBaseObjectW GetInstanceProperties(ListViewItem currentListViewItem, bool refreshObject = false)
+        {
+            WmiInstance wmiInstance = currentListViewItem.Tag as WmiInstance;
+            if (wmiInstance == null)
+            {
+                currentListViewItem.BackColor = ColorCategory.Error;
+                const string message = "Failed to display Properties for selected instance. PopulateInstanceProperties - Current Instance is null.";
+                SetStatusBar2(message, MessageCategory.Error, true);
+                return null;
+            }
 
+            try
+            {
+                ManagementBaseObjectW mObjectW;
+
+                if (refreshObject)
+                {
+                    ManagementObject mObject = new ManagementObject(wmiInstance.Path);
+                    mObjectW = new ManagementBaseObjectW(mObject)
+                    {
+                        IncludeNullProperties = checkNullProps.Checked,
+                        IncludeSystemProperties = checkSystemProps.Checked
+                    };
+                }
+                else
+                {
+                    mObjectW = new ManagementBaseObjectW(wmiInstance.Instance)
+                    {
+                        IncludeNullProperties = checkNullProps.Checked,
+                        IncludeSystemProperties = checkSystemProps.Checked
+                    };
+                }
+
+                // Some objects don't allow refreshing. Call GetText to see if we get an error, and set the Mof to be used for Show/Copy MOF
+                //_instanceMof = mObjectW.GetText(TextFormat.Mof).Replace("\n", "\r\n");
+                System.Console.WriteLine("uh oh!");
+                return mObjectW;
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("Failed to {0}. Error: {1}", refreshObject ? "Refresh Object" : "Populate Instance Properties", ex.Message);
+                if (!refreshObject) currentListViewItem.BackColor = ColorCategory.Error;
+                SetStatusBar2(message, MessageCategory.Error);
+                return null;
+            }
+        }
         private void PopulateListClasses(List<ListViewItem> items, string filterText = "", bool notFilter = false)
         {
             ResetListClasses();
@@ -1987,7 +2033,38 @@ namespace WmiExplorer
             if (listClasses.SelectedItems.Count > 0)
                 listClasses.EnsureVisible(listClasses.SelectedItems[0].Index);
         }
+        private void exportListInstances(bool selectedOnly)
+        {
+            SaveFileDialog SaveFileDialog1 = new SaveFileDialog();
+            //SaveFileDialog1.CheckWriteAccess = true
+            SaveFileDialog1.InitialDirectory = "c";
+            SaveFileDialog1.Title = "Save as CSV file";
+            SaveFileDialog1.Filter = "Comma-Delimited files| *.csv";
+            if (SaveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(SaveFileDialog1.FileName);
+                writer.WriteLine("InstanceName,PropertyName,Type,Value");
 
+                String alltext = String.Empty;
+                foreach (ListViewItem item in listInstances.Items)
+                {
+                    ManagementBaseObjectW mobjinst = GetInstanceProperties(item, false);
+                    foreach (PropertyData property in mobjinst.Properties)
+                    {
+                        writer.WriteLine("\"{0}:Name='{4}'\",\"{1}\",\"{2}\",\"{3}\"", mobjinst.ClassPath, property.Name, property.Type, property.Value,mobjinst.GetPropertyValue("Name"));
+                    }
+                    // writer.Write(mobjinst.GetText);
+                    // alltext += mobjinst.GetText(TextFormat.Mof);
+                }
+                writer.Close();
+            } else
+            {
+                return;
+            }
+
+            
+
+        }
         private void PopulateListInstances(List<ListViewItem> items, string filterText = "", bool notFilter = false)
         {
             ResetListInstances();

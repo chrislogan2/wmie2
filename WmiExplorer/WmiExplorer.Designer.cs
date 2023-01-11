@@ -82,6 +82,8 @@ namespace WmiExplorer
             this.tabControlInstances = new System.Windows.Forms.TabControl();
             this.tabInstances = new System.Windows.Forms.TabPage();
             this.groupBoxInstanceOptions = new System.Windows.Forms.GroupBox();
+            this.buttonExportSelected = new System.Windows.Forms.Button();
+            this.buttonExportAll = new System.Windows.Forms.Button();
             this.buttonRefreshObject = new System.Windows.Forms.Button();
             this.buttonInstancesRefresh = new System.Windows.Forms.Button();
             this.checkNullProps = new System.Windows.Forms.CheckBox();
@@ -163,6 +165,7 @@ namespace WmiExplorer
             this.radioModeAsync = new System.Windows.Forms.RadioButton();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.saveScriptDialog = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
@@ -285,6 +288,7 @@ namespace WmiExplorer
             // 
             this.menuItemFile_SmsMode.Checked = global::WmiExplorer.Properties.Settings.Default.bSmsMode;
             this.menuItemFile_SmsMode.CheckOnClick = true;
+            this.menuItemFile_SmsMode.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuItemFile_SmsMode.Name = "menuItemFile_SmsMode";
             this.menuItemFile_SmsMode.Size = new System.Drawing.Size(176, 22);
             this.menuItemFile_SmsMode.Text = "Enable &SMS Mode";
@@ -800,6 +804,8 @@ namespace WmiExplorer
             // 
             // groupBoxInstanceOptions
             // 
+            this.groupBoxInstanceOptions.Controls.Add(this.buttonExportSelected);
+            this.groupBoxInstanceOptions.Controls.Add(this.buttonExportAll);
             this.groupBoxInstanceOptions.Controls.Add(this.buttonRefreshObject);
             this.groupBoxInstanceOptions.Controls.Add(this.buttonInstancesRefresh);
             this.groupBoxInstanceOptions.Controls.Add(this.checkNullProps);
@@ -813,9 +819,34 @@ namespace WmiExplorer
             this.groupBoxInstanceOptions.TabStop = false;
             this.groupBoxInstanceOptions.Text = "Instance Options";
             // 
+            // buttonExportSelected
+            // 
+            this.buttonExportSelected.Location = new System.Drawing.Point(323, 9);
+            this.buttonExportSelected.Name = "buttonExportSelected";
+            this.buttonExportSelected.Size = new System.Drawing.Size(113, 23);
+            this.buttonExportSelected.TabIndex = 9;
+            this.buttonExportSelected.Text = "Export Selected...";
+            this.toolTip.SetToolTip(this.buttonExportSelected, "Export currently selected instances.");
+            this.buttonExportSelected.UseVisualStyleBackColor = true;
+            this.buttonExportSelected.Click += new System.EventHandler(this.buttonExportSelected_Click);
+
+            // 
+            // buttonExportAll
+            // 
+            this.buttonExportAll.AccessibleDescription = "Export All Instances";
+            this.buttonExportAll.Location = new System.Drawing.Point(442, 9);
+            this.buttonExportAll.Name = "buttonExportAll";
+            this.buttonExportAll.Size = new System.Drawing.Size(94, 23);
+            this.buttonExportAll.TabIndex = 8;
+            this.buttonExportAll.Text = "Export All";
+            this.toolTip.SetToolTip(this.buttonExportAll, "Export all instances of class.");
+            this.buttonExportAll.UseMnemonic = false;
+            this.buttonExportAll.UseVisualStyleBackColor = true;
+            this.buttonExportAll.Click += new System.EventHandler(this.buttonExportAll_Click);
+            // 
             // buttonRefreshObject
             // 
-            this.buttonRefreshObject.Location = new System.Drawing.Point(442, 20);
+            this.buttonRefreshObject.Location = new System.Drawing.Point(442, 29);
             this.buttonRefreshObject.Name = "buttonRefreshObject";
             this.buttonRefreshObject.Size = new System.Drawing.Size(94, 23);
             this.buttonRefreshObject.TabIndex = 4;
@@ -827,7 +858,7 @@ namespace WmiExplorer
             // 
             // buttonInstancesRefresh
             // 
-            this.buttonInstancesRefresh.Location = new System.Drawing.Point(323, 20);
+            this.buttonInstancesRefresh.Location = new System.Drawing.Point(323, 29);
             this.buttonInstancesRefresh.Name = "buttonInstancesRefresh";
             this.buttonInstancesRefresh.Size = new System.Drawing.Size(113, 23);
             this.buttonInstancesRefresh.TabIndex = 3;
@@ -2067,6 +2098,9 @@ namespace WmiExplorer
         private ToolStripMenuItem menuItemFile_SmsMode;
         private ToolStripMenuItem menuItemHelp_About;
         private SplitContainer splitContainerMethodsParams;
+        private Button buttonExportSelected;
+        private Button buttonExportAll;
+        private SaveFileDialog saveFileDialog;
     }
 }
 

@@ -1422,7 +1422,76 @@ namespace WmiExplorer
             if (e.KeyCode == Keys.Enter)
                 buttonComputerConnect.PerformClick();
         }
+        // Class Instance Export Invocation.
+        private void buttonExportAll_Click(object sender, EventArgs e)
+        {
+            if (listClasses.SelectedItems.Count == 0) return;
+            WmiClass currentWmiClass = listClasses.SelectedItems[0].Tag as WmiClass;
+            if (currentWmiClass == null)
+            {
+                SetStatusBar2("Failed to export results. ERROR: TextChanged - Current Class is null", MessageCategory.Error, true);
+                return;
+            }
+            if (!currentWmiClass.IsEnumerated) return;
+            // Save filter text
+            string filterText = String.Empty;
+            currentWmiClass.InstanceFilterQuick = filterText;
 
+            // Parse filter text
+            bool notFilter = false;
+
+            var cachedItem = AppCache[currentWmiClass.Path];
+            if (cachedItem != null)
+            {
+                List<ListViewItem> lc = cachedItem as List<ListViewItem>;
+                PopulateListInstances(lc, filterText, notFilter);
+                SetStatusBar2("Showing " + listInstances.Items.Count + "/" + currentWmiClass.InstanceCount + " mathing instances from " + currentWmiClass.DisplayName, MessageCategory.Cache);
+                exportListInstances(false);
+            }
+            else
+            {
+                SetStatusBar2("Failed to filter results. Cache Expired for " + currentWmiClass.DisplayName, MessageCategory.Warn, true);
+            }
+        }
+        private void buttonExportSelected_Click(object sender, EventArgs e)
+        {
+            if (listClasses.SelectedItems.Count == 0) return;
+            WmiClass currentWmiClass = listClasses.SelectedItems[0].Tag as WmiClass;
+            if (currentWmiClass == null)
+            {
+                SetStatusBar2("Failed to export results. ERROR: TextChanged - Current Class is null", MessageCategory.Error, true);
+                return;
+            }
+            if (!currentWmiClass.IsEnumerated) return;
+            // Save filter text
+            string filterText = textBoxInstanceFilterQuick.Text.ToLower();
+            currentWmiClass.InstanceFilterQuick = filterText;
+
+            // Parse filter text
+            bool notFilter = false;
+            if (filterText.StartsWith("!") && filterText.Length > 1)
+            {
+                filterText = filterText.Substring(1);
+                notFilter = true;
+            }
+
+            // Don't do anything if filter Text is not atleast 3 characters
+            if (filterText.Length > 0 && filterText.Length < 3) return;
+
+
+            var cachedItem = AppCache[currentWmiClass.Path];
+            if (cachedItem != null)
+            {
+                List<ListViewItem> lc = cachedItem as List<ListViewItem>;
+                PopulateListInstances(lc, filterText, notFilter);
+                SetStatusBar2("Showing " + listInstances.Items.Count + "/" + currentWmiClass.InstanceCount + " mathing instances from " + currentWmiClass.DisplayName, MessageCategory.Cache);
+                exportListInstances(false);
+            }
+            else
+            {
+                SetStatusBar2("Failed to filter results. Cache Expired for " + currentWmiClass.DisplayName, MessageCategory.Warn, true);
+            }
+        }
         private void textBoxInstanceFilterQuick_TextChanged(object sender, EventArgs e)
         {
             // Do nothing and return if no Class is selected.

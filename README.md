@@ -12,7 +12,7 @@ As someone who works with Configuration Manager (SCCM), I spend a lot of time in
 * Administrator rights to view some WMI objects
 * (Optional) Internet access for automatic update check
 
-# New Features as of 2.x.x.x
+# New Features as of 2.0.1.x
 * Invoke WMIExplorer from command line:
 `WmiExplorer.exe HOSTNAME`
 `WmiExplorer.exe HOSTNAME USERNAME`
@@ -20,6 +20,7 @@ As someone who works with Configuration Manager (SCCM), I spend a lot of time in
 I don't really recommend you use plaintext passwords on the command line.
 * Generic support for method parameters that are arrays -- needs more testing as it is a somewhat primitive implementation.
 * Script Generation updated to show CIM cmdlets and include legact WMI equivalents.
+* Support for CSV export of methods.
 * More to come.
 # Features
 * Browse and view WMI objects in a single pane of view.

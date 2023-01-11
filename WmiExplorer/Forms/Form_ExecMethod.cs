@@ -254,14 +254,12 @@ namespace WmiExplorer.Forms
                         //detect if the param is an array.
                         if (paramtype.Type == CimType.String)
                         {
-                            System.Diagnostics.Debug.WriteLine("Hooray2!");
 
                         }
                         if (multilinestate == true)
                         {
-                            var StrArray = control.Text.Split('\n');
+                            String[] StrArray = control.Text.Split(new String[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                             inParams[control.Tag.ToString()] = StrArray;
-                            System.Diagnostics.Debug.WriteLine("Hooray!");
                         }
                         else {
                             inParams[control.Tag.ToString()] = control.Text;

@@ -1,4 +1,4 @@
-﻿Version 2.x.x.x [01-05-2023]
+﻿Version 2.0.1.x [01-11-2023]
   Changelog in progress 
   * Migrate to VS2022
   * Update .NET dependency to 4.8 from 4.0

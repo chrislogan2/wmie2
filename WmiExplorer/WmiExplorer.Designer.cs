@@ -829,7 +829,6 @@ namespace WmiExplorer
             this.toolTip.SetToolTip(this.buttonExportSelected, "Export currently selected instances.");
             this.buttonExportSelected.UseVisualStyleBackColor = true;
             this.buttonExportSelected.Click += new System.EventHandler(this.buttonExportSelected_Click);
-
             // 
             // buttonExportAll
             // 

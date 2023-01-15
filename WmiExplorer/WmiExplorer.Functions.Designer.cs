@@ -1947,7 +1947,31 @@ namespace WmiExplorer
                 // Some objects don't allow refreshing. Call GetText to see if we get an error, and set the Mof to be used for Show/Copy MOF
                 _instanceMof = mObjectW.GetText(TextFormat.Mof).Replace("\n", "\r\n");
 
-                propertyGridInstance.SelectedObject = mObjectW;
+                ManagementObjectCollection mObjectRelated = (new ManagementObject(wmiInstance.Path)).GetRelated();
+                
+                if (mObjectRelated.Count > 0)
+                {
+                    object[] mObjectRelatedArray = new object[mObjectRelated.Count];
+                    mObjectRelated.CopyTo(mObjectRelatedArray,0);
+                    ManagementBaseObjectW[] x = new ManagementBaseObjectW[mObjectRelated.Count + 1];
+                    x[0]=mObjectW;
+                    int indexer = 1;
+                    foreach(ManagementBaseObject mObjInst in mObjectRelatedArray)
+                    {   
+                        x[indexer]= new ManagementObjectW(mObjInst);
+                        indexer++;
+
+                    }
+                    
+                    //object[] PropertyArray = new object[2];
+                    //PropertyArray[0] = mObjectW;
+                    //PropertyArray[1] = mObjectRelatedArray;
+
+                    propertyGridInstance.SelectedObjects = x;
+                } else
+                {
+                    propertyGridInstance.SelectedObject = mObjectW;
+                }
                 currentListViewItem.BackColor = ColorCategory.Info;
             }
             catch (Exception ex)

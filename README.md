@@ -1,4 +1,4 @@
-# Download: https://git.io/wmie2
+# Download: [Release Page](https://github.com/chrislogan2/wmie2/releases)
 [![Build Status](https://jenkins1.cdslabs.ca/buildStatus/icon?job=wmie2-debug)](https://jenkins1.cdslabs.ca/job/wmie2-debug/)
 
 WMI Explorer is a utility intended to provide the ability to browse and view WMI namespaces/classes/instances/properties in a single pane of view and is inspired by the PowerShell based WMI Explorer written by Marc.
